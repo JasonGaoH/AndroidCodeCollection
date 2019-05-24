@@ -14,11 +14,12 @@
             android:layout_width="match_parent"
             android:layout_height="100dp">
 
-        <ImageView
+       <ImageView
             android:src="@drawable/ic_launcher_background"
             android:scaleType="fitXY"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
     </com.gaohui.android.code.collection.view.RoundRelativeLayout>
 
 </LinearLayout>

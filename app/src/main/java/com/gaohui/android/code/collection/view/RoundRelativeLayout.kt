@@ -2,13 +2,14 @@ package com.gaohui.android.code.collection.view
 
 import android.content.Context
 import android.content.res.Resources
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Path
-import android.graphics.RectF
+import android.graphics.*
+import android.graphics.drawable.GradientDrawable
+import android.os.Build
+import android.support.annotation.RequiresApi
 import android.util.AttributeSet
 import android.widget.RelativeLayout
 
+@RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
 class RoundRelativeLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : RelativeLayout(context, attrs, defStyleAttr) {
 
     private val mPath = Path()
@@ -16,9 +17,16 @@ class RoundRelativeLayout @JvmOverloads constructor(context: Context, attrs: Att
 
     private val sMetrics = Resources.getSystem().displayMetrics
 
+    val round = dp2px(8f)
+
 
     init {
         paint.isAntiAlias = true
+
+        val bg = GradientDrawable()
+        bg.cornerRadius = round.toFloat()
+        bg.setColor(Color.RED)
+        background = bg
     }
 
 
@@ -26,7 +34,7 @@ class RoundRelativeLayout @JvmOverloads constructor(context: Context, attrs: Att
         super.onSizeChanged(w, h, oldw, oldh)
 
         mPath.reset()
-        val round = dp2px(8f)
+
         mPath.addRoundRect(RectF(paddingLeft.toFloat(), paddingTop.toFloat(), w - paddingRight.toFloat(), h - paddingBottom.toFloat()), round.toFloat(), round.toFloat(), Path.Direction.CW)
     }
 
