@@ -3,7 +3,6 @@ package com.gaohui.android.code.collection;
 import android.content.Context;
 import android.view.ViewConfiguration;
 
-/* compiled from: HomeFlingHelper */
 public class HomeFlingHelper {
     private static float DECELERATION_RATE = ((float) (Math.log(0.78d) / Math.log(0.9d)));
     private static float mFlingFriction = ViewConfiguration.getScrollFriction();

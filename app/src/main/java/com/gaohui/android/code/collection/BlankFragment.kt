@@ -1,6 +1,5 @@
 package com.gaohui.android.code.collection
 
-import android.app.Activity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.RecyclerView
@@ -19,16 +18,12 @@ class BlankFragment : Fragment() {
 
     private val mDataList = ArrayList<Any>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_blank, container, false)
     }
 
-    fun getChildRecyclerView():ChildRecyclerView {
+    fun getChildRecyclerView():ChildRecyclerView? {
         return childRecyclerView
     }
 
@@ -53,9 +48,11 @@ class BlankFragment : Fragment() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
 
-
                 val z = getLastVisibleItem(childRecyclerView) >= getTotalItemCount(childRecyclerView) + -4
-                if (newState == SCROLL_STATE_IDLE && z) {
+//                if (newState == SCROLL_STATE_IDLE && z) {
+//                    loadData()
+//                }
+                if(z) {
                     loadData()
                 }
 
@@ -74,29 +71,16 @@ class BlankFragment : Fragment() {
         return childRecyclerView.adapter?.itemCount?:-1
     }
 
-    fun getFirstVisibleItem(childRecyclerView:RecyclerView): Int {
-        val layoutManager = childRecyclerView.layoutManager
-        if (layoutManager != null && layoutManager is StaggeredGridLayoutManager) {
-            val iArr = IntArray(2)
-            (layoutManager as StaggeredGridLayoutManager).findFirstVisibleItemPositions(iArr)
-            return if (iArr[0] > iArr[1]) iArr[1] else iArr[0]
-        } else return if (layoutManager == null || layoutManager !is GridLayoutManager) {
-            -1
-        } else {
-            (layoutManager as GridLayoutManager).findFirstVisibleItemPosition()
-        }
-    }
-
     fun getLastVisibleItem(childRecyclerView:RecyclerView): Int {
         val layoutManager = childRecyclerView.layoutManager
-        if (layoutManager != null && layoutManager is StaggeredGridLayoutManager) {
+        return if (layoutManager != null && layoutManager is StaggeredGridLayoutManager) {
             val iArr = IntArray(2)
-            (layoutManager as StaggeredGridLayoutManager).findLastVisibleItemPositions(iArr)
-            return if (iArr[0] > iArr[1]) iArr[0] else iArr[1]
-        } else return if (layoutManager == null || layoutManager !is GridLayoutManager) {
+            layoutManager.findLastVisibleItemPositions(iArr)
+            if (iArr[0] > iArr[1]) iArr[0] else iArr[1]
+        } else if (layoutManager == null || layoutManager !is GridLayoutManager) {
             -1
         } else {
-            (layoutManager as GridLayoutManager).findLastVisibleItemPosition()
+            layoutManager.findLastVisibleItemPosition()
         }
     }
 
