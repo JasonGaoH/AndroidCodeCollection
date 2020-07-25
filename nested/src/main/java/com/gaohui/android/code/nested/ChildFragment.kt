@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import kotlinx.android.synthetic.main.fragment_child.*
 import kotlin.collections.ArrayList
@@ -49,6 +50,42 @@ class ChildFragment : Fragment() {
 
         childRecyclerView.adapter?.notifyDataSetChanged()
 
+        initLoadMore()
+    }
+
+    private fun initLoadMore() {
+        childRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                tryLoadMoreIfNeed()
+            }
+        })
+
+    }
+
+    private fun loadMore():Boolean {
+        val loadMoreSize = 5
+        for (i in 0..loadMoreSize) {
+            mDataList.add("load more child item $i")
+        }
+        childRecyclerView.adapter?.notifyItemRangeChanged(mDataList.size-loadMoreSize,mDataList.size)
+        return true
+    }
+
+    private fun tryLoadMoreIfNeed() {
+        val adapter = childRecyclerView.adapter ?: return
+        val layoutManager = childRecyclerView.layoutManager
+        val last: IntArray
+        if (layoutManager is StaggeredGridLayoutManager) {
+            last = IntArray(layoutManager.spanCount)
+            layoutManager.findLastVisibleItemPositions(last)
+            for (i in last.indices) {
+                if ((last[i] >= adapter!!.itemCount - 4)) {
+                    if (loadMore()) return
+                    break
+                }
+            }
+        }
     }
 
     companion object {

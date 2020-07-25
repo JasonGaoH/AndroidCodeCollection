@@ -26,7 +26,7 @@ public class SimpleCategoryViewHolder extends RecyclerView.ViewHolder {
             ((StaggeredGridLayoutManager.LayoutParams)itemView.getLayoutParams()).setFullSpan(true);
         }
         categoryRecyclerView = itemView.findViewById(R.id.categoryRecyclerView);
-        categoryRecyclerView.setNestedScrollingEnabled(false);
+//        categoryRecyclerView.setNestedScrollingEnabled(false);
         ArrayList<Object> data = new ArrayList<>();
         recyclerViewAdapter = new CategoryAdapter(data);
         categoryRecyclerView.setAdapter(recyclerViewAdapter);
