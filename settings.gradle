@@ -1,2 +1,4 @@
+include ':thread'
+include ':kotlin'
 include ':nested'
 include ':app'
