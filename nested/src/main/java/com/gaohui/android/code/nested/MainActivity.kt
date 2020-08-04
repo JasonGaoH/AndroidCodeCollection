@@ -26,25 +26,25 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         initViews()
 
-//        viewPager2.adapter =
-//            object : FragmentStateAdapter(this) {
-//                override fun createFragment(position: Int): Fragment {
-//                    return ChildFragment.newInstance()
-//
-//                }
-//
-//                override fun getItemCount(): Int {
-//                    return strArray.size
-//                }
-//            }
-//
-//        TabLayoutMediator(tabs, viewPager2) { tab, position ->
-//            tab.text = strArray[position]
-//        }.attach()
+        viewPager2.adapter =
+            object : FragmentStateAdapter(this) {
+                override fun createFragment(position: Int): Fragment {
+                    return ChildFragment.newInstance()
 
-        val indexPagerAdapter = IndexPagerAdapter(supportFragmentManager, stringList, fragmentList)
-        view_pager.adapter = indexPagerAdapter
-        tabs.setupWithViewPager(view_pager)
+                }
+
+                override fun getItemCount(): Int {
+                    return strArray.size
+                }
+            }
+
+        TabLayoutMediator(tabs, viewPager2) { tab, position ->
+            tab.text = strArray[position]
+        }.attach()
+
+//        val indexPagerAdapter = IndexPagerAdapter(supportFragmentManager, stringList, fragmentList)
+//        view_pager.adapter = indexPagerAdapter
+//        tabs.setupWithViewPager(view_pager)
     }
 
     private fun initViews() {
